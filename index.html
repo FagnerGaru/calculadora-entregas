@@ -1,61 +1,104 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Entregas</title>
+<title>Calcule Sua Entrega</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <div class="card">
-<h1>🚚 Calculadora de Entregas</h1>
-<p>Consulte o valor e solicite pelo WhatsApp.</p>
 
-<label>Local de Coleta</label>
-<input type="hidden" id="origem">
+<h1>Calcule Sua Entrega</h1>
 
-<h3>📦 Dados da Coleta</h3>
+<p>
+    Informe os locais de coleta e entrega para calcular o valor.
+</p>
 
-<input id="nomeColeta" placeholder="Seu nome">
-<input id="telefoneColeta" placeholder="Seu telefone">
-<input id="ruaColeta" placeholder="Rua">
-<input id="numeroColeta" placeholder="Número">
-<input id="complementoColeta"
-placeholder="Apartamento, casa, bloco, referência (opcional)">
+<div class="box">
 
-<label>Cidade da Coleta</label>
-<select id="cidadeColeta"></select>
+    <h3>Dados da Coleta</h3>
 
-<label>Bairro da Coleta</label>
-<select id="bairroColeta"></select>
+    <input id="nomeColeta" placeholder="Seu nome">
 
-<hr>
+    <input id="telefoneColeta" placeholder="Seu telefone">
 
-<h3>📍 Destino Principal</h3>
+    <input id="ruaColeta" placeholder="Rua">
 
-<input id="nomeDestino" placeholder="Nome destinatário (opcional)">
-<input id="telefoneDestino" placeholder="Telefone destinatário (opcional)">
-<input id="ruaDestino" placeholder="Rua (opcional)">
-<input id="numeroDestino" placeholder="Número (opcional)">
-<input id="complementoDestino" placeholder="Complemento (opcional)">
+    <input id="numeroColeta" placeholder="Número">
 
-<label>Cidade do Destino</label>
-<select id="cidadeDestino"></select>
+    <input
+        id="complementoColeta"
+        placeholder="Apartamento, casa, bloco ou referência">
 
-<label>Bairro do Destino</label>
-<select id="principal"></select>
+    <label>Cidade da Coleta</label>
+    <select id="cidadeColeta"></select>
+
+    <label>Bairro da Coleta</label>
+    <select id="bairroColeta"></select>
+
+</div>
+
+<div class="box">
+
+    <h3>Destino Principal</h3>
+
+    <input
+        id="nomeDestino"
+        placeholder="Nome destinatário (opcional)">
+
+    <input
+        id="telefoneDestino"
+        placeholder="Telefone destinatário (opcional)">
+
+    <input
+        id="ruaDestino"
+        placeholder="Rua (opcional)">
+
+    <input
+        id="numeroDestino"
+        placeholder="Número (opcional)">
+
+    <input
+        id="complementoDestino"
+        placeholder="Complemento (opcional)">
+
+    <label>Cidade do Destino</label>
+    <select id="cidadeDestino"></select>
+
+    <label>Bairro do Destino</label>
+    <select id="principal"></select>
+
+</div>
 
 <div id="extras"></div>
 
-<button type="button" onclick="addExtra()">
-➕ Adicionar Destino
+<button
+    type="button"
+    class="add-btn"
+    onclick="addExtra()">
+
+    ➕ Adicionar Destino
+
 </button>
 
 <h2 id="total">Total: R$ 0,00</h2>
 
-<button class="whats" onclick="enviar()">🚚 Solicitar Entrega</button>
+<button
+    class="whats"
+    onclick="enviar()">
+
+    🏍️ Solicitar Entrega
+
+</button>
+```
+
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
