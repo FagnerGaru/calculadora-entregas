@@ -19,7 +19,8 @@ function fill(sel){
  Object.keys(taxas).sort().forEach(b=>{
   let o=document.createElement('option');
   o.value=b;
-  o.textContent=`${b} - R$ ${taxas[b]}`;
+  o.textContent =
+`${b} - R$ ${(taxas[b]/2).toFixed(2)}`;
   sel.appendChild(o);
  });
 }
@@ -27,21 +28,100 @@ function fill(sel){
 const principal=document.getElementById('principal');
 fill(principal);
 
+const bairroColeta =
+document.getElementById('bairroColeta');
+
+fill(bairroColeta);
+
 function addExtra(){
- const div=document.createElement('div');
- div.className='extra-box';
- div.innerHTML='<select class="extra"></select>';
- document.getElementById('extras').appendChild(div);
- fill(div.querySelector('select'));
+
+ const div = document.createElement('div');
+ div.className = 'extra-box';
+
+ div.innerHTML = `
+ <hr>
+
+ <h4>📍 Destino Extra</h4>
+
+ <button
+   type="button"
+   onclick="this.parentElement.remove(); calcular();"
+ >
+   🗑 Remover Destino
+ </button>
+
+ <input
+   type="text"
+   class="extraNome"
+   placeholder="Nome (opcional)"
+ >
+
+ <input
+   type="tel"
+   class="extraTelefone"
+   placeholder="Telefone (opcional)"
+ >
+
+ <input
+   type="text"
+   class="extraRua"
+   placeholder="Rua (opcional)"
+ >
+
+ <input
+   type="text"
+   class="extraNumero"
+   placeholder="Número (opcional)"
+ >
+
+ <input
+   type="text"
+   class="extraComplemento"
+   placeholder="Complemento (opcional)"
+ >
+
+ <select class="extra"></select>
+ `;
+
+ const extras = document.getElementById('extras');
+
+ extras.appendChild(div);
+
+ fill(div.querySelector('.extra'));
+
  calcular();
 }
 
-function calcular(){
- let total=taxas[principal.value]||0;
- document.querySelectorAll('.extra').forEach(s=>{
-  total += (taxas[s.value]||0)/2;
+function calcular() {
+
+ let total = 0;
+
+ const coleta =
+ document.getElementById('bairroColeta')?.value;
+
+ if (taxas[coleta]) {
+   total += taxas[coleta] / 2;
+ }
+
+ if (taxas[principal.value]) {
+   total += taxas[principal.value] / 2;
+ }
+
+ document.querySelectorAll('.extra').forEach(select => {
+
+   if (taxas[select.value]) {
+      total += taxas[select.value] / 2;
+   }
+
  });
- document.getElementById('total').innerText='Total: R$ '+total.toFixed(2);
+
+ document.getElementById('total').innerText =
+   'Total: R$ ' +
+   total.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+   });
+
  return total;
 }
 
@@ -49,14 +129,93 @@ document.addEventListener('change',calcular);
 window.onload=calcular;
 
 function enviar(){
- let total=calcular();
- let msg=`Solicitação de Entrega\n\nColeta: ${origem.value}\nDestino Principal: ${principal.value}`;
 
- document.querySelectorAll('.extra').forEach(s=>{
-   msg += `\nDestino Extra: ${s.value}`;
- });
+const nome =
+document.getElementById('nomeColeta')?.value || '-';
 
- msg += `\n\nTotal: R$ ${total.toFixed(2)}`;
+const telefone =
+document.getElementById('telefoneColeta')?.value || '-';
 
- window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
+const rua =
+document.getElementById('ruaColeta')?.value || '-';
+
+const numero =
+document.getElementById('numeroColeta')?.value || '-';
+
+const complemento =
+document.getElementById('complementoColeta')?.value || '-';
+
+const bairro =
+document.getElementById('bairroColeta')?.value || '-';
+
+
+
+const nomeDestino =
+document.getElementById('nomeDestino')?.value || '-';
+
+const telefoneDestino =
+document.getElementById('telefoneDestino')?.value || '-';
+
+const ruaDestino =
+document.getElementById('ruaDestino')?.value || '-';
+
+const numeroDestino =
+document.getElementById('numeroDestino')?.value || '-';
+
+const complementoDestino =
+document.getElementById('complementoDestino')?.value || '-';
+
+ let total = calcular();
+
+ let msg =
+`🚚 SOLICITAÇÃO DE ENTREGA
+
+📦 COLETA
+
+Nome: ${nome}
+Telefone: ${telefone}
+Rua: ${rua}
+Número: ${numero}
+Complemento: ${complemento}
+Bairro: ${bairro}
+
+📍 DESTINO PRINCIPAL
+
+Nome: ${nomeDestino}
+Telefone: ${telefoneDestino}
+Rua: ${ruaDestino}
+Número: ${numeroDestino}
+Complemento: ${complementoDestino}
+Bairro: ${principal.value}
+`;
+
+document.querySelectorAll('.extra-box').forEach(box=>{
+
+ const nome = box.querySelector('.extraNome').value;
+ const telefone = box.querySelector('.extraTelefone').value;
+ const rua = box.querySelector('.extraRua').value;
+ const numero = box.querySelector('.extraNumero').value;
+ const complemento = box.querySelector('.extraComplemento').value;
+ const bairro = box.querySelector('.extra').value;
+
+ msg += `
+
+📍 DESTINO EXTRA
+
+Nome: ${nome || '-'}
+Telefone: ${telefone || '-'}
+Rua: ${rua || '-'}
+Número: ${numero || '-'}
+Complemento: ${complemento || '-'}
+Bairro: ${bairro}
+`;
+});
+msg += `
+
+💰 Total: R$ ${total.toFixed(2)}
+`;
+window.open(
+  `https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`,
+  '_blank'
+);
 }
