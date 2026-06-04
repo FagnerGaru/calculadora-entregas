@@ -16,7 +16,8 @@ const cidades = {
     "Alto Aririú": 15,
     "Barra do Aririú": 15,
     "Madri": 10,
-    "Caminho Novo": 10
+    "Caminho Novo": 10,
+    "São sebastião": 10
   },
 
   "São José": {
@@ -76,6 +77,42 @@ const cidades = {
   }
 
 };
+
+const regioes = {
+
+  PALHOCA_CENTRO: [
+    "Brejaru",
+    "Passa Vinte",
+    "Pedra Branca",
+    "Ponte do Imaruim",
+    "Jardim Eldorado"
+  ],
+
+  ARIRIU: [
+    "Aririú",
+    "Centro de Palhoça",
+    "Alto Aririú",
+    "Barra do Aririú",
+    "Madri",
+    "Pagani",
+    "Caminho Novo",
+    "Bela Vista"
+  ]
+
+};
+
+function getRegiao(bairro){
+
+  for(const regiao in regioes){
+
+    if(regioes[regiao].includes(bairro)){
+      return regiao;
+    }
+
+  }
+
+  return null;
+}
 
 function getValorBairro(nomeBairro){
 
@@ -207,17 +244,41 @@ function calcular(){
     const coleta =
     document.getElementById('bairroColeta')?.value;
 
-    total += getValorBairro(coleta) / 2;
+    const destino =
+    principal.value;
 
-    total += getValorBairro(principal.value) / 2;
+    const regiaoColeta =
+    getRegiao(coleta);
 
+    const regiaoDestino =
+    getRegiao(destino);
+
+    // Mesma região de Palhoça
+    if(
+        regiaoColeta &&
+        regiaoDestino &&
+        regiaoColeta === regiaoDestino
+    ){
+
+        total = 10;
+
+    }else{
+
+        total += getValorBairro(coleta) / 2;
+
+        total += getValorBairro(destino) / 2;
+
+    }
+
+    // Destinos extras
     document.querySelectorAll('.extra').forEach(select => {
 
-    const valor = getValorBairro(select.value);
+        const valor =
+        getValorBairro(select.value);
 
-    total += valor / 2;
+        total += valor / 2;
 
-});
+    });
 
     document.getElementById('total').innerText =
     'Total: R$ ' +
