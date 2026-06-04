@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Entregas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="card">
+<h1>🚚 Calculadora de Entregas</h1>
+<p>Consulte o valor e solicite pelo WhatsApp.</p>
+
+<label>Local de Coleta</label>
+<input id="origem" placeholder="Ex: Brejaru">
+
+<label>Destino Principal</label>
+<select id="principal"></select>
+
+<div id="extras"></div>
+
+<button onclick="addExtra()">+ Adicionar Destino</button>
+
+<h2 id="total">Total: R$ 0,00</h2>
+
+<button class="whats" onclick="enviar()">Solicitar Entrega</button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
