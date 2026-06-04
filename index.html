@@ -14,38 +14,48 @@
 <label>Local de Coleta</label>
 <input type="hidden" id="origem">
 
-<h3>Dados da Coleta</h3>
+<h3>📦 Dados da Coleta</h3>
 
-<input id="nomeDestino" placeholder="Nome (opcional)">
-<input id="telefoneDestino" placeholder="Telefone (opcional)">
+<input id="nomeColeta" placeholder="Seu nome">
+<input id="telefoneColeta" placeholder="Seu telefone">
+<input id="ruaColeta" placeholder="Rua">
+<input id="numeroColeta" placeholder="Número">
+<input id="complementoColeta"
+placeholder="Apartamento, casa, bloco, referência (opcional)">
+
+<label>Cidade da Coleta</label>
+<select id="cidadeColeta"></select>
+
+<label>Bairro da Coleta</label>
+<select id="bairroColeta"></select>
+
+<hr>
+
+<h3>📍 Destino Principal</h3>
+
+<input id="nomeDestino" placeholder="Nome destinatário (opcional)">
+<input id="telefoneDestino" placeholder="Telefone destinatário (opcional)">
 <input id="ruaDestino" placeholder="Rua (opcional)">
 <input id="numeroDestino" placeholder="Número (opcional)">
 <input id="complementoDestino" placeholder="Complemento (opcional)">
+
+<label>Cidade do Destino</label>
+<select id="cidadeDestino"></select>
+
+<label>Bairro do Destino</label>
 <select id="principal"></select>
 
 <div id="extras"></div>
 
-<h2>Destino da Entrega</h2>
-
-<input type="text" id="nomeColeta" placeholder="Seu nome" required>
-
-<input type="tel" id="telefoneColeta" placeholder="Seu telefone" required>
-
-<input type="text" id="ruaColeta" placeholder="Rua" required>
-
-<input type="text" id="numeroColeta" placeholder="Número" required>
-
-<input type="text" id="complementoColeta"
-placeholder="Apartamento, casa, bloco, referência (opcional)">
-
-<label>Bairro da Coleta</label>
-<select id="bairroColeta"></select>
-<button onclick="addExtra()">+ Adicionar Destino</button>
+<button type="button" onclick="addExtra()">
+➕ Adicionar Destino
+</button>
 
 <h2 id="total">Total: R$ 0,00</h2>
 
-<button class="whats" onclick="enviar()">Solicitar Entrega</button>
+<button class="whats" onclick="enviar()">🚚 Solicitar Entrega</button>
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
