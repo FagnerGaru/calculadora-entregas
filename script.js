@@ -164,6 +164,23 @@ function carregarBairros(cidade, select){
 }
 
 
+function mostrarFormulario(){
+
+    document.getElementById('dadosColeta').style.display = 'block';
+
+    document.getElementById('dadosDestino').style.display = 'block';
+
+    document.getElementById('dadosEntrega').style.display = 'block';
+
+    document.getElementById('continuarBtn').style.display = 'none';
+
+    document.querySelectorAll('.dadosExtra').forEach(div => {
+        div.style.display = 'block';
+    });
+
+}
+
+
 function addExtra(){
 
  const div = document.createElement('div');
@@ -178,37 +195,44 @@ function addExtra(){
 <button
 type="button"
 onclick="this.parentElement.remove(); calcular();">
-🗑 Remover Destino
+
+🗑 Remover
+
 </button>
-
-<input type="text"
-class="extraNome"
-placeholder="Nome (opcional)">
-
-<input type="tel"
-class="extraTelefone"
-placeholder="Telefone (opcional)">
-
-<input type="text"
-class="extraRua"
-placeholder="Rua (opcional)">
-
-<input type="text"
-class="extraNumero"
-placeholder="Número (opcional)">
-
-<input type="text"
-class="extraComplemento"
-placeholder="Complemento (opcional)">
 
 <label>Cidade</label>
 <select class="extraCidade"></select>
 
 <label>Bairro</label>
 <select class="extra"></select>
+
+<div class="dadosExtra" style="display:none;">
+
+<input
+class="extraNome"
+placeholder="Nome (opcional)">
+
+<input
+class="extraTelefone"
+placeholder="Telefone (opcional)">
+
+<input
+class="extraRua"
+placeholder="Rua">
+
+<input
+class="extraNumero"
+placeholder="Número">
+
+<input
+class="extraComplemento"
+placeholder="Complemento">
+
+</div>
 `;
 
- document.getElementById('extras').appendChild(div);
+ document.getElementById('extras')
+ .appendChild(div);
 
  const cidadeExtra =
  div.querySelector('.extraCidade');
@@ -219,19 +243,20 @@ placeholder="Complemento (opcional)">
  carregarCidades(cidadeExtra);
 
  carregarBairros(
-   cidadeExtra.value,
-   bairroExtra
+    cidadeExtra.value,
+    bairroExtra
  );
 
- cidadeExtra.addEventListener('change', () => {
+ cidadeExtra.addEventListener(
+ 'change',
+ () => {
 
-   carregarBairros(
-     cidadeExtra.value,
-     bairroExtra
-   );
+    carregarBairros(
+       cidadeExtra.value,
+       bairroExtra
+    );
 
-   calcular();
-
+    calcular();
  });
 
  calcular();
@@ -280,12 +305,11 @@ function calcular(){
 
     });
 
-    document.getElementById('total').innerText =
-    'Total: R$ ' +
-    total.toLocaleString('pt-BR',{
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
-    });
+    document.getElementById('valorTotal').textContent =
+total.toLocaleString('pt-BR',{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+});
 
     return total;
 }
@@ -336,6 +360,12 @@ document.getElementById('cidadeColeta')?.value || '-';
 const cidadeDestino =
 document.getElementById('cidadeDestino')?.value || '-';
 
+const dataEntrega =
+document.getElementById('dataEntrega')?.value || '-';
+
+const horaEntrega =
+document.getElementById('horaEntrega')?.value || '-';
+
  let total = calcular();
 
 
@@ -352,6 +382,11 @@ Complemento: ${complemento}
 Cidade: ${cidade}
 Bairro: ${bairro}
 
+📅 AGENDAMENTO
+
+Data: ${dataEntrega}
+Horário: ${horaEntrega}
+
 📍 DESTINO PRINCIPAL
 
 Nome: ${nomeDestino}
@@ -363,30 +398,43 @@ Cidade: ${cidadeDestino}
 Bairro: ${principal.value}
 `;
 
-document.querySelectorAll('.extra-box').forEach(box=>{
+document.querySelectorAll('.dadosExtra').forEach((box,index)=>{
 
- const nome = box.querySelector('.extraNome').value;
- const telefone = box.querySelector('.extraTelefone').value;
- const rua = box.querySelector('.extraRua').value;
- const numero = box.querySelector('.extraNumero').value;
- const complemento = box.querySelector('.extraComplemento').value;
- const cidade =box.querySelector('.extraCidade')?.value || '-';
- const bairro =box.querySelector('.extra')?.value || '-';
+ const nome =
+ box.querySelector('.extraNome')?.value || '-';
 
-msg += `
+ const telefone =
+ box.querySelector('.extraTelefone')?.value || '-';
 
-📍 DESTINO EXTRA
+ const rua =
+ box.querySelector('.extraRua')?.value || '-';
 
-Nome: ${nome || '-'}
-Telefone: ${telefone || '-'}
-Rua: ${rua || '-'}
-Número: ${numero || '-'}
-Complemento: ${complemento || '-'}
+ const numero =
+ box.querySelector('.extraNumero')?.value || '-';
 
+ const complemento =
+ box.querySelector('.extraComplemento')?.value || '-';
+
+ const cidade =
+ document.querySelectorAll('.extraCidade')[index]?.value || '-';
+
+ const bairro =
+ document.querySelectorAll('.extra')[index]?.value || '-';
+
+ msg += `
+
+📍 DESTINO EXTRA #${index + 1}
+
+Nome: ${nome}
+Telefone: ${telefone}
+Rua: ${rua}
+Número: ${numero}
+Complemento: ${complemento}
 Cidade: ${cidade}
 Bairro: ${bairro}
 `;
 });
+
 msg += `
 
 💰 Total: R$ ${total.toFixed(2)}
@@ -435,4 +483,30 @@ cidadeDestino.addEventListener('change', () => {
     calcular();
 });
 
-window.onload = calcular;
+window.onload = () => {
+
+    calcular();
+
+    const campoData =
+    document.getElementById('dataEntrega');
+
+    if(campoData){
+
+        const hoje = new Date();
+
+        campoData.min =
+        hoje.toISOString().split('T')[0];
+
+        const maxDate =
+        new Date();
+
+        maxDate.setMonth(
+            maxDate.getMonth() + 1
+        );
+
+        campoData.max =
+        maxDate.toISOString().split('T')[0];
+
+    }
+
+};

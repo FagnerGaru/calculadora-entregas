@@ -7,20 +7,36 @@
 <title>Calcule Sua Entrega</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <body>
+
+
+<div class="logo">
+    <i class="fa-solid fa-motorcycle"></i>
+</div>
 
 <div class="card">
 
-<h1>Calcule Sua Entrega</h1>
+    <h1> Calcule Sua Entrega</h1>
 
-<p>
-    Informe os locais de coleta e entrega para calcular o valor.
-</p>
+    <p class="subtitulo">
+        Entrega rápida e segura
+    </p>
+
+    <!-- SIMULAÇÃO -->
 
 <div class="box">
 
-    <h3>Dados da Coleta</h3>
+    <h3>📦 Local da Coleta</h3>
+
+    <label>Cidade</label>
+    <select id="cidadeColeta"></select>
+
+    <label>Bairro</label>
+    <select id="bairroColeta"></select>
+
+    <div id="dadosColeta" style="display:none;">
 
     <input id="nomeColeta" placeholder="Seu nome">
 
@@ -31,70 +47,130 @@
     <input id="numeroColeta" placeholder="Número">
 
     <input
-        id="complementoColeta"
-        placeholder="Apartamento, casa, bloco ou referência">
-
-    <label>Cidade da Coleta</label>
-    <select id="cidadeColeta"></select>
-
-    <label>Bairro da Coleta</label>
-    <select id="bairroColeta"></select>
+    id="complementoColeta"
+    placeholder="Complemento">
 
 </div>
+
+</div>
+
 
 <div class="box">
 
-    <h3>Destino Principal</h3>
+    <h3>📍 Destino Principal</h3>
 
-    <input
-        id="nomeDestino"
-        placeholder="Nome destinatário (opcional)">
-
-    <input
-        id="telefoneDestino"
-        placeholder="Telefone destinatário (opcional)">
-
-    <input
-        id="ruaDestino"
-        placeholder="Rua (opcional)">
-
-    <input
-        id="numeroDestino"
-        placeholder="Número (opcional)">
-
-    <input
-        id="complementoDestino"
-        placeholder="Complemento (opcional)">
-
-    <label>Cidade do Destino</label>
+    <label>Cidade</label>
     <select id="cidadeDestino"></select>
 
-    <label>Bairro do Destino</label>
+    <label>Bairro</label>
     <select id="principal"></select>
+
+    <div id="dadosDestino" style="display:none;">
+
+    <input
+    id="nomeDestino"
+    placeholder="Nome destinatário (opcional)">
+
+    <input
+    id="telefoneDestino"
+    placeholder="Telefone (opcional)">
+
+    <input
+    id="ruaDestino"
+    placeholder="Rua">
+
+    <input
+    id="numeroDestino"
+    placeholder="Número">
+
+    <input
+    id="complementoDestino"
+    placeholder="Complemento">
 
 </div>
 
-<div id="extras"></div>
+</div>
+
+    <div id="extras"></div>
 
 <button
-    type="button"
-    class="add-btn"
-    onclick="addExtra()">
+type="button"
+class="add-btn"
+onclick="addExtra()">
 
-    ➕ Adicionar Destino
+➕ Adicionar Destino
 
 </button>
 
-<h2 id="total">Total: R$ 0,00</h2>
+<div id="total">
+
+    <div class="total-label">
+        Valor da entrega
+    </div>
+
+    <div class="total-valor">
+
+        <span class="moeda">
+            R$
+        </span>
+
+        <span id="valorTotal" class="numero">
+            0,00
+        </span>
+
+    </div>
+
+</div>
 
 <button
-    class="whats"
-    onclick="enviar()">
+id="continuarBtn"
+class="btn-continuar"
+type="button"
+onclick="mostrarFormulario()">
 
-    🏍️ Solicitar Entrega
+Solicitar a Entrega
 
 </button>
-```
+
+<!-- ÁREA OCULTA -->
+
+<div id="dadosEntrega" style="display:none;">
+
+    <h3>📅 Agendamento da entrega</h3>
+
+    <label>Data</label>
+    <input type="date" id="dataEntrega">
+
+    <label>Horário</label>
+
+    <select id="horaEntrega">
+
+        <option value="08:00 às 10:00">
+        🌞 Manhã 08:00 às 10:00
+        </option>
+
+        <option value="10:00 às 12:00">
+        🌞 Manhã 10:00 às 12:00
+        </option>
+
+        <option value="12:00 às 14:00">
+        ☀️ Tarde 12:00 às 14:00
+        </option>
+
+        <option value="14:00 às 16:00">
+        ☀️ Tarde 14:00 às 16:00
+        </option>
+
+    </select>
+
+    <div id="dadosExtras"></div>
+
+    <button class="btn-enviar" onclick="enviar()">
+    <i class="fa-solid fa-paper-plane"></i>
+    Enviar Solicitação
+</button>
+
+</div>
 
 </div>
 
